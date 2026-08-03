@@ -8,6 +8,9 @@ Landing page for Store Sales Forecasting System
 Author : Shariq Zia
 Project: Store Sales Forecasting
 """
+import urllib.request
+from pathlib import Path
+
 
 import pandas as pd
 import streamlit as st
@@ -18,6 +21,24 @@ from src.config import (
     REPORT_DIR,
     PREDICTION_DIR
 )
+
+PROCESSED_DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+files = {
+    "train_features.parquet":
+        "https://huggingface.co/datasets/ShawRickZia/machine-learning-forecasting-data/resolve/main/train_features.parquet",
+
+    "test_features.parquet":
+        "https://huggingface.co/datasets/ShawRickZia/machine-learning-forecasting-data/resolve/main/test_features.parquet",
+}
+
+for filename, url in files.items():
+    filepath = PROCESSED_DATA_DIR / filename
+
+    if not filepath.exists():
+        with st.spinner(f"Downloading {filename}..."):
+            urllib.request.urlretrieve(url, filepath)
+
 
 
 # ==========================================================
@@ -33,6 +54,7 @@ def load_data():
     )
 
     return train
+
 
 
 # ==========================================================
