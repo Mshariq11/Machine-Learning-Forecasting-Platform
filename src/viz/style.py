@@ -1,0 +1,18 @@
+"""
+Project Visualization Style
+"""
+
+PRIMARY = "#1f77b4"
+SECONDARY = "#ff7f0e"
+SUCCESS = "#2ca02c"
+WARNING = "#d62728"
+
+FIGSIZE = (12, 6)
+
+TITLE_SIZE = 18
+LABEL_SIZE = 12
+TICK_SIZE = 10
+
+LINE_WIDTH = 2.5
+
+GRID_ALPHA = 0.25

@@ -1,0 +1,49 @@
+# ===========================
+# Dataset
+# ===========================
+
+data/raw/*
+data/processed/*
+data/predictions/*
+
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/README.md
+
+# ===========================
+# Models (optional)
+# ===========================
+
+# Uncomment if model files become too large
+# models/*.pkl
+
+# ===========================
+# Predictions
+# ===========================
+
+predictions/*.csv
+
+# ===========================
+# Reports
+# ===========================
+
+reports/*.xlsx
+
+# ===========================
+# Python
+# ===========================
+
+__pycache__/
+*.py[cod]
+
+# ===========================
+# Jupyter
+# ===========================
+
+.ipynb_checkpoints/
+
+# ===========================
+# VS Code
+# ===========================
+
+.vscode/

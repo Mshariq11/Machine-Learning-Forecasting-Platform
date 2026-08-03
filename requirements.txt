@@ -1,0 +1,29 @@
+# ==========================================
+# Store Sales Forecasting & Decision Support
+# ==========================================
+
+# Core Data Processing
+numpy>=1.26.0
+pandas>=2.2.0
+
+# Machine Learning
+scikit-learn>=1.5.0
+xgboost>=2.1.0
+lightgbm>=4.5.0
+joblib>=1.4.0
+
+# Visualization
+matplotlib>=3.9.0
+plotly>=5.24.0
+
+# Dashboard
+streamlit>=1.37.0
+
+# Excel Reporting
+openpyxl>=3.1.5
+
+# Notebook
+jupyter>=1.1.0
+ipykernel>=6.29.0
+
+pip install -r requirements.txt
