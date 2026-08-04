@@ -211,7 +211,7 @@ def show_planning_dashboard():
 
             fig,
 
-            use_container_width=True
+            width="stretch"
 
         )
 
@@ -257,7 +257,7 @@ def show_planning_dashboard():
 
         fig,
 
-        use_container_width=True
+        width="stretch"
 
     )
 
@@ -305,7 +305,7 @@ def show_planning_dashboard():
 
         fig,
 
-        use_container_width=True
+        width="stretch"
 
     )
 
@@ -365,7 +365,7 @@ def show_planning_dashboard():
 
         inventory,
 
-        use_container_width=True,
+        width="stretch",
 
         hide_index=True
 

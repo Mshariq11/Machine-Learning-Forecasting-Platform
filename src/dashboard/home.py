@@ -214,7 +214,7 @@ platform designed to support business decision-making.
 
         hide_index=True,
 
-        use_container_width=True
+        width="stretch"
 
     )
 
@@ -282,7 +282,7 @@ platform designed to support business decision-making.
 
         hide_index=True,
 
-        use_container_width=True
+        width="stretch"
 
     )
 

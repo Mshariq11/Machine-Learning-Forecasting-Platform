@@ -297,7 +297,7 @@ def show_inventory_dashboard():
 
         fig,
 
-        use_container_width=True
+        width="stretch"
 
     )
 
@@ -345,7 +345,7 @@ def show_inventory_dashboard():
 
         fig,
 
-        use_container_width=True
+        width="stretch"
 
     )
 
@@ -395,7 +395,7 @@ def show_inventory_dashboard():
 
         fig,
 
-        use_container_width=True
+        width="stretch"
 
     )
 
@@ -419,7 +419,7 @@ def show_inventory_dashboard():
 
         ),
 
-        use_container_width=True,
+        width="stretch",
 
         hide_index=True
 

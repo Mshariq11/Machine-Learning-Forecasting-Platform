@@ -184,7 +184,7 @@ def show_marketing_dashboard():
 
         fig,
 
-        use_container_width=True
+        width="stretch"
 
     )
 
@@ -232,7 +232,7 @@ def show_marketing_dashboard():
 
         fig,
 
-        use_container_width=True
+        width="stretch"
 
     )
 
@@ -278,7 +278,7 @@ def show_marketing_dashboard():
 
         fig,
 
-        use_container_width=True
+        width="stretch"
 
     )
 
@@ -336,7 +336,7 @@ def show_marketing_dashboard():
 
             fig,
 
-            use_container_width=True
+            width="stretch"
 
         )
 
@@ -384,7 +384,7 @@ def show_marketing_dashboard():
 
         hide_index=True,
 
-        use_container_width=True
+        width="stretch"
 
     )
 

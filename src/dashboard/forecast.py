@@ -203,7 +203,7 @@ def show_forecast_dashboard():
 
             fig,
 
-            use_container_width=True
+            width="stretch"
 
         )
 
@@ -249,7 +249,7 @@ def show_forecast_dashboard():
 
         fig,
 
-        use_container_width=True
+        width="stretch"
 
     )
 
@@ -297,7 +297,7 @@ def show_forecast_dashboard():
 
         fig,
 
-        use_container_width=True
+        width="stretch"
 
     )
 
@@ -327,7 +327,7 @@ def show_forecast_dashboard():
 
         fig,
 
-        use_container_width=True
+        width="stretch"
 
     )
 
@@ -376,7 +376,7 @@ def show_forecast_dashboard():
 
         top,
 
-        use_container_width=True,
+        width="stretch",
 
         hide_index=True
 

@@ -170,7 +170,7 @@ def show_finance_dashboard():
 
         fig,
 
-        use_container_width=True
+        width="stretch"
 
     )
 
@@ -212,7 +212,7 @@ def show_finance_dashboard():
 
         fig,
 
-        use_container_width=True
+        width="stretch"
 
     )
 
@@ -268,7 +268,7 @@ def show_finance_dashboard():
 
         fig,
 
-        use_container_width=True
+        width="stretch"
 
     )
 
@@ -316,7 +316,7 @@ def show_finance_dashboard():
 
         fig,
 
-        use_container_width=True
+        width="stretch"
 
     )
 
@@ -362,7 +362,7 @@ def show_finance_dashboard():
 
             fig,
 
-            use_container_width=True
+            width="stretch"
 
         )
 
@@ -380,7 +380,7 @@ def show_finance_dashboard():
 
         stores,
 
-        use_container_width=True,
+        width="stretch",
 
         hide_index=True
 
