@@ -1,95 +1,104 @@
 """
 =========================================================
-Dataset Downloader
+Download Project Assets
 =========================================================
 
-Downloads required datasets automatically if missing.
+Downloads datasets and model artifacts from Hugging Face.
 
 Author : Shariq Zia
 Project: Store Sales Forecasting
 """
 
-from pathlib import Path
 import urllib.request
 
-from src.config import PROCESSED_DATA_DIR
-
+from src.config import (
+    RAW_DATA_DIR,
+    PROCESSED_DATA_DIR,
+    MODEL_DIR,
+)
 
 # ==========================================================
-# DATASET URLS
+# HUGGING FACE URLS
 # ==========================================================
 
-DATASET_URLS = {
+DATASET_URL = (
+    "https://huggingface.co/datasets/"
+    "ShawRickZia/machine-learning-forecasting-data/resolve/main/"
+)
 
-    "train_features.parquet":
-    "https://huggingface.co/datasets/ShawRickZia/machine-learning-forecasting-data/resolve/main/train_features.parquet",
+MODEL_URL = (
+    "https://huggingface.co/"
+    "ShawRickZia/store-sales-forecasting-models/resolve/main/"
+)
 
-    "test_features.parquet":
-    "https://huggingface.co/datasets/ShawRickZia/machine-learning-forecasting-data/resolve/main/test_features.parquet",
+# ==========================================================
+# FILES
+# ==========================================================
 
+DATA_FILES = {
+    "train_features.parquet": PROCESSED_DATA_DIR,
+    "test_features.parquet": PROCESSED_DATA_DIR,
 }
 
+MODEL_FILES = {
+    "xgboost_model.pkl": MODEL_DIR,
+    "lightgbm_model.pkl": MODEL_DIR,
+    "feature_columns.pkl": MODEL_DIR,
+    "category_encoders.pkl": MODEL_DIR,
+    "training_metadata.pkl": MODEL_DIR,
+}
 
 # ==========================================================
-# DOWNLOAD ONE FILE
+# DOWNLOAD HELPER
 # ==========================================================
 
-def download_file(filename: str):
-
-    destination = PROCESSED_DATA_DIR / filename
+def download_file(url: str, destination):
 
     if destination.exists():
-        return destination
+        return
 
-    PROCESSED_DATA_DIR.mkdir(
+    destination.parent.mkdir(
         parents=True,
-        exist_ok=True
+        exist_ok=True,
     )
-
-    url = DATASET_URLS[filename]
 
     urllib.request.urlretrieve(
         url,
-        destination
+        destination,
     )
 
-    return destination
-
-
 # ==========================================================
-# DOWNLOAD ALL FILES
+# DOWNLOAD DATASETS
 # ==========================================================
 
-def download_all():
+def download_datasets():
 
-    paths = {}
+    for filename, folder in DATA_FILES.items():
 
-    for filename in DATASET_URLS:
-
-        paths[filename] = download_file(
-            filename
+        download_file(
+            DATASET_URL + filename,
+            folder / filename,
         )
 
-    return paths
-
-
 # ==========================================================
-# ENSURE TRAIN DATA
+# DOWNLOAD MODELS
 # ==========================================================
 
-def ensure_train_data():
+def download_models():
 
-    return download_file(
-        "train_features.parquet"
-    )
+    for filename, folder in MODEL_FILES.items():
 
+        download_file(
+            MODEL_URL + filename,
+            folder / filename,
+        )
 
 # ==========================================================
-# ENSURE TEST DATA
+# DOWNLOAD EVERYTHING
 # ==========================================================
 
-def ensure_test_data():
+def download_everything():
 
-    return download_file(
-        "test_features.parquet"
-    )
+    download_datasets()
+
+    download_models()

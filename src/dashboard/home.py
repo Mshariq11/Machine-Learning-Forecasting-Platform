@@ -20,16 +20,6 @@ from src.config import (
 )
 
 # ==========================================================
-# LOAD DATA
-# ==========================================================
-
-@st.cache_data
-def load_data():
-    from src.utils.download_data import get_processed_data
-
-    return get_processed_data("train_features.parquet")
-
-# ==========================================================
 # HOME PAGE
 # ==========================================================
 
