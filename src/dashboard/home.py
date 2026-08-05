@@ -5,41 +5,19 @@ Home Dashboard
 
 Landing page for Store Sales Forecasting System
 
-Author : Shariq Zia
+Author : ShawRick
 Project: Store Sales Forecasting
 """
-import urllib.request
-from pathlib import Path
 
-
-import pandas as pd
 import streamlit as st
+import pandas as pd
 
+from src.utils.data_loader import load_train_data
 from src.config import (
-    PROCESSED_DATA_DIR,
     MODEL_DIR,
     REPORT_DIR,
-    PREDICTION_DIR
+    PREDICTION_DIR,
 )
-
-PROCESSED_DATA_DIR.mkdir(parents=True, exist_ok=True)
-
-files = {
-    "train_features.parquet":
-        "https://huggingface.co/datasets/ShawRickZia/machine-learning-forecasting-data/resolve/main/train_features.parquet",
-
-    "test_features.parquet":
-        "https://huggingface.co/datasets/ShawRickZia/machine-learning-forecasting-data/resolve/main/test_features.parquet",
-}
-
-for filename, url in files.items():
-    filepath = PROCESSED_DATA_DIR / filename
-
-    if not filepath.exists():
-        with st.spinner(f"Downloading {filename}..."):
-            urllib.request.urlretrieve(url, filepath)
-
-
 
 # ==========================================================
 # LOAD DATA
@@ -47,15 +25,9 @@ for filename, url in files.items():
 
 @st.cache_data
 def load_data():
+    from src.utils.download_data import get_processed_data
 
-    train = pd.read_parquet(
-        PROCESSED_DATA_DIR /
-        "train_features.parquet"
-    )
-
-    return train
-
-
+    return get_processed_data("train_features.parquet")
 
 # ==========================================================
 # HOME PAGE
@@ -63,7 +35,7 @@ def load_data():
 
 def show_home():
 
-    df = load_data()
+    df = load_train_data()
 
     st.title(
         " Store Sales Forecasting System"

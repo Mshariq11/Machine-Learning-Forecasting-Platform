@@ -13,7 +13,12 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-from src.config import PROCESSED_DATA_DIR
+from src.config import PROCESSED_DATA_DIR 
+
+train = pd.read_parquet(
+    PROCESSED_DATA_DIR /
+    "train_features.parquet"
+)
 
 
 # ==========================================================

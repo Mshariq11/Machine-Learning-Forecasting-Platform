@@ -11,10 +11,9 @@ data/predictions/*
 !data/README.md
 
 # ===========================
-# Models (optional)
+# Models
 # ===========================
 
-# Uncomment if model files become too large
 # models/*.pkl
 
 # ===========================
@@ -35,6 +34,22 @@ reports/*.xlsx
 
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
+
+# ===========================
+# Virtual Environments
+# ===========================
+
+.venv/
+venv/
+env/
+
+# ===========================
+# Environment Variables
+# ===========================
+
+.env
 
 # ===========================
 # Jupyter
@@ -47,3 +62,9 @@ __pycache__/
 # ===========================
 
 .vscode/
+
+# ===========================
+# macOS
+# ===========================
+
+.DS_Store

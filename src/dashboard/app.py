@@ -8,12 +8,6 @@ Main Streamlit Application
 Author : ShawRick
 Project: Store Sales Forecasting
 """
-import sys
-from pathlib import Path
-
-# Add project root to Python path
-ROOT_DIR = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT_DIR))
 
 import streamlit as st
 
@@ -142,21 +136,21 @@ with st.sidebar:
 
         [
 
-            " Home",
+            "Home",
 
-            " Executive",
+            "Executive",
 
-            " Planning",
+            "Planning",
 
-            " Inventory",
+            "Inventory",
 
-            " Marketing",
+            "Marketing",
 
-            " Operations",
+            "Operations",
 
-            " Finance",
+            "Finance",
 
-            " Forecast"
+            "Forecast"
 
         ]
 
@@ -166,13 +160,12 @@ with st.sidebar:
 
     st.markdown("### Project")
 
-    st.write("Retail Demand Forecasting")
-
-    st.write("Machine Learning")
-
-    st.write("Business Intelligence")
-
-    st.write("Automated Reporting")
+    st.markdown("""
+    - Retail Demand Forecasting
+    - Machine Learning
+    - Business Intelligence
+    - Automated Reporting
+    """)
 
     st.divider()
 
@@ -189,34 +182,13 @@ with st.sidebar:
 # PAGE ROUTER
 # ==========================================================
 
-if page == " Home":
-
-    show_home()
-
-elif page == " Executive":
-
-    show_executive_dashboard()
-
-elif page == " Planning":
-
-    show_planning_dashboard()
-
-elif page == " Inventory":
-
-    show_inventory_dashboard()
-
-elif page == " Marketing":
-
-    show_marketing_dashboard()
-
-elif page == " Operations":
-
-    show_operations_dashboard()
-
-elif page == " Finance":
-
-    show_finance_dashboard()
-
-elif page == " Forecast":
-
-    show_forecast_dashboard()
+PAGES = {
+    "Home": show_home,
+    "Executive": show_executive_dashboard,
+    "Planning": show_planning_dashboard,
+    "Inventory": show_inventory_dashboard,
+    "Marketing": show_marketing_dashboard,
+    "Operations": show_operations_dashboard,
+    "Finance": show_finance_dashboard,
+    "Forecast": show_forecast_dashboard,
+}

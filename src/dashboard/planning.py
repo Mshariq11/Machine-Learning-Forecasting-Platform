@@ -9,17 +9,11 @@ Author : Shariq Zia
 Project: Store Sales Forecasting
 """
 
-import urllib.request
-
-from src.models.predict import run_prediction
-
 import pandas as pd
 import plotly.express as px
 import streamlit as st
 
 from src.config import (
-    PROCESSED_DATA_DIR,
-    MODEL_DIR,
     PREDICTION_DIR,
     REPORT_DIR,
 )
@@ -28,7 +22,6 @@ from src.config import (
 # ==========================================================
 # LOAD DATA
 # ==========================================================
-
 @st.cache_data
 def load_forecast():
 
@@ -37,45 +30,10 @@ def load_forecast():
         "sales_prediction.csv"
     )
 
-    try:
+    if prediction_file.exists():
+        return pd.read_csv(prediction_file)
 
-        if not prediction_file.exists():
-
-            test_file = (
-                PROCESSED_DATA_DIR /
-                "test_features.parquet"
-            )
-
-            if not test_file.exists():
-
-                urllib.request.urlretrieve(
-                    "https://huggingface.co/datasets/ShawRickZia/machine-learning-forecasting-data/resolve/main/test_features.parquet",
-                    test_file
-                )
-
-            test = pd.read_parquet(
-                test_file
-            )
-
-            run_prediction(
-                test=test,
-                model_path=MODEL_DIR / "xgboost_model.pkl",
-                feature_path=MODEL_DIR / "feature_columns.pkl",
-                output_path=prediction_file
-            )
-
-        return pd.read_csv(
-            prediction_file
-        )
-
-    except Exception as e:
-
-        st.error(
-            f"Unable to generate forecast: {e}"
-        )
-
-        return pd.DataFrame()
-
+    return pd.DataFrame()
 
 # ==========================================================
 # PLANNING DASHBOARD
@@ -97,10 +55,10 @@ def show_planning_dashboard():
 
     if forecast.empty:
 
-        st.warning(
-            "No forecast data available."
-        )
-
+        st.error("Forecast data is unavailable.")
+        st.info("""
+        Run the prediction pipeline before opening this dashboard.
+        """)
         return
 
     # =====================================================

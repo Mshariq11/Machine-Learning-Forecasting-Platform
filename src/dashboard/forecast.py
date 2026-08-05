@@ -9,18 +9,11 @@ Author : Shariq Zia
 Project: Store Sales Forecasting
 """
 
-import urllib.request
-
-from src.models.predict import run_prediction
-
-
 import pandas as pd
 import plotly.express as px
 import streamlit as st
 
 from src.config import (
-    PROCESSED_DATA_DIR,
-    MODEL_DIR,
     PREDICTION_DIR,
     REPORT_DIR,
 )
@@ -38,48 +31,10 @@ def load_forecast():
         "sales_prediction.csv"
     )
 
-    try:
+    if prediction_file.exists():
+        return pd.read_csv(prediction_file)
 
-        # ---------------------------------------------------
-        # Generate prediction automatically if missing
-        # ---------------------------------------------------
-
-        if not prediction_file.exists():
-
-            test_file = (
-                PROCESSED_DATA_DIR /
-                "test_features.parquet"
-            )
-
-            if not test_file.exists():
-
-                urllib.request.urlretrieve(
-                    "https://huggingface.co/datasets/ShawRickZia/machine-learning-forecasting-data/resolve/main/test_features.parquet",
-                    test_file
-                )
-
-            test = pd.read_parquet(
-                test_file
-            )
-
-            run_prediction(
-                test=test,
-                model_path=MODEL_DIR / "xgboost_model.pkl",
-                feature_path=MODEL_DIR / "feature_columns.pkl",
-                output_path=prediction_file
-            )
-
-        return pd.read_csv(
-            prediction_file
-        )
-
-    except Exception as e:
-
-        st.error(
-            f"Unable to generate forecast: {e}"
-        )
-
-        return pd.DataFrame()
+    return pd.DataFrame()
 
 
 # ==========================================================
@@ -102,10 +57,8 @@ def show_forecast_dashboard():
 
     if forecast.empty:
 
-        st.warning(
-            "Forecast file not found."
-        )
-
+        st.error("Forecast data is unavailable.")
+        st.info("""Run the prediction pipeline before opening this dashboard.""")
         return
 
     # =====================================================
@@ -428,70 +381,26 @@ def show_forecast_dashboard():
     # DOWNLOAD REPORT
     # =====================================================
 
-    prediction_file = (
-
-        PREDICTION_DIR /
-
-        "sales_prediction.csv"
-
-    )
-
-    if prediction_file.exists():
-
-        with open(
-
-            prediction_file,
-
-            "rb"
-
-        ) as f:
-
+prediction_file = PREDICTION_DIR / "sales_prediction.csv"
+if prediction_file.exists():
+        with prediction_file.open("rb") as f:
             st.download_button(
-
                 "📥 Download Forecast CSV",
-
                 data=f,
-
-                file_name="sales_prediction.csv",
-
-                mime="text/csv"
-
+                file_name=prediction_file.name,
+                mime="text/csv",
             )
-
-    report = (
-
-        REPORT_DIR /
-
-        "Demand_Forecast_Report.xlsx"
-
-    )
-
-    if report.exists():
-
-        with open(
-
-            report,
-
-            "rb"
-
-        ) as f:
-
-            st.download_button(
-
-                "📥 Download Excel Forecast Report",
-
-                data=f,
-
-                file_name=report.name,
-
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-
+            report = REPORT_DIR / "Demand_Forecast_Report.xlsx"
+            if report.exists():
+                with report.open("rb") as f:
+                    st.download_button(
+                        "📥 Download Excel Forecast Report",
+                        data=f,
+                        file_name=report.name,
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             )
-
-    st.divider()
-
-    st.success(
-        """
+                    st.divider()
+                    st.success("""
 Forecast Insights
 
 • Forecast demand supports inventory replenishment.
@@ -503,9 +412,7 @@ Forecast Insights
 • Product family forecasts support purchasing decisions.
 
 • Downloadable reports are available for business users.
-        """
-    )
-
-    st.caption(
+""")
+                    st.caption(
         "Forecast Dashboard | Store Sales Forecasting"
     )
