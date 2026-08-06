@@ -13,27 +13,8 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-from src.config import (
-    PREDICTION_DIR,
-    REPORT_DIR,
-)
-
-
-# ==========================================================
-# LOAD DATA
-# ==========================================================
-@st.cache_data
-def load_forecast():
-
-    prediction_file = (
-        PREDICTION_DIR /
-        "sales_prediction.csv"
-    )
-
-    if prediction_file.exists():
-        return pd.read_csv(prediction_file)
-
-    return pd.DataFrame()
+from src.config import REPORT_DIR
+from src.utils.forecast_loader import load_forecast
 
 # ==========================================================
 # PLANNING DASHBOARD

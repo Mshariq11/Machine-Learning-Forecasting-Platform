@@ -8,35 +8,11 @@ Marketing Campaign & Promotion Dashboard
 Author : Shariq Zia
 Project: Store Sales Forecasting
 """
-import urllib.request
 import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-from src.config import PROCESSED_DATA_DIR
-
-
-# ==========================================================
-# LOAD DATA
-# ==========================================================
-
-@st.cache_data
-def load_data():
-
-    train_file = (
-        PROCESSED_DATA_DIR /
-        "train_features.parquet"
-    )
-
-    if not train_file.exists():
-
-        urllib.request.urlretrieve(
-            "https://huggingface.co/datasets/ShawRickZia/machine-learning-forecasting-data/resolve/main/train_features.parquet",
-            train_file
-        )
-
-    return pd.read_parquet(train_file)
-
+from src.utils.data_loader import load_train_data
 
 # ==========================================================
 # MARKETING DASHBOARD
@@ -44,7 +20,7 @@ def load_data():
 
 def show_marketing_dashboard():
 
-    df = load_data()
+    df = load_train_data()
 
     st.title(
         "📣 Marketing Dashboard"

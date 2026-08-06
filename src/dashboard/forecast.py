@@ -18,23 +18,7 @@ from src.config import (
     REPORT_DIR,
 )
 
-
-# ==========================================================
-# LOAD FORECAST
-# ==========================================================
-
-@st.cache_data
-def load_forecast():
-
-    prediction_file = (
-        PREDICTION_DIR /
-        "sales_prediction.csv"
-    )
-
-    if prediction_file.exists():
-        return pd.read_csv(prediction_file)
-
-    return pd.DataFrame()
+from src.utils.forecast_loader import load_forecast
 
 
 # ==========================================================
@@ -377,12 +361,13 @@ def show_forecast_dashboard():
 
     st.divider()
 
-    # =====================================================
+        # =====================================================
     # DOWNLOAD REPORT
     # =====================================================
 
-prediction_file = PREDICTION_DIR / "sales_prediction.csv"
-if prediction_file.exists():
+    prediction_file = PREDICTION_DIR / "sales_prediction.csv"
+
+    if prediction_file.exists():
         with prediction_file.open("rb") as f:
             st.download_button(
                 "📥 Download Forecast CSV",
@@ -390,17 +375,22 @@ if prediction_file.exists():
                 file_name=prediction_file.name,
                 mime="text/csv",
             )
-            report = REPORT_DIR / "Demand_Forecast_Report.xlsx"
-            if report.exists():
-                with report.open("rb") as f:
-                    st.download_button(
-                        "📥 Download Excel Forecast Report",
-                        data=f,
-                        file_name=report.name,
-                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+
+    report = REPORT_DIR / "Demand_Forecast_Report.xlsx"
+
+    if report.exists():
+        with report.open("rb") as f:
+            st.download_button(
+                "📥 Download Excel Forecast Report",
+                data=f,
+                file_name=report.name,
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             )
-                    st.divider()
-                    st.success("""
+
+    st.divider()
+
+    st.success(
+        """
 Forecast Insights
 
 • Forecast demand supports inventory replenishment.
@@ -412,7 +402,9 @@ Forecast Insights
 • Product family forecasts support purchasing decisions.
 
 • Downloadable reports are available for business users.
-""")
-                    st.caption(
+        """
+    )
+
+    st.caption(
         "Forecast Dashboard | Store Sales Forecasting"
     )

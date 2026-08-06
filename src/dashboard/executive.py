@@ -13,28 +13,7 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-from src.config import PROCESSED_DATA_DIR 
-
-train = pd.read_parquet(
-    PROCESSED_DATA_DIR /
-    "train_features.parquet"
-)
-
-
-# ==========================================================
-# LOAD DATA
-# ==========================================================
-
-@st.cache_data
-def load_data():
-
-    train = pd.read_parquet(
-        PROCESSED_DATA_DIR /
-        "train_features.parquet"
-    )
-
-    return train
-
+from src.utils.data_loader import load_train_data 
 
 # ==========================================================
 # EXECUTIVE DASHBOARD
@@ -42,7 +21,7 @@ def load_data():
 
 def show_executive_dashboard():
 
-    df = load_data()
+    df = load_train_data()
 
     st.title(
         " Executive Dashboard"
