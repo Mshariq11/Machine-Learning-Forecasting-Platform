@@ -12,7 +12,6 @@ Project: Store Sales Forecasting
 import urllib.request
 
 from src.config import (
-    RAW_DATA_DIR,
     PROCESSED_DATA_DIR,
     MODEL_DIR,
 )
@@ -92,6 +91,48 @@ def download_models():
             MODEL_URL + filename,
             folder / filename,
         )
+# ==========================================================
+# ENSURE TRAIN DATA
+# ==========================================================
+
+def ensure_train_data():
+
+    train_file = PROCESSED_DATA_DIR / "train_features.parquet"
+
+    if not train_file.exists():
+        download_datasets()
+
+
+# ==========================================================
+# ENSURE TEST DATA
+# ==========================================================
+
+def ensure_test_data():
+
+    test_file = PROCESSED_DATA_DIR / "test_features.parquet"
+
+    if not test_file.exists():
+        download_datasets()
+
+
+# ==========================================================
+# ENSURE MODEL FILES
+# ==========================================================
+
+def ensure_model_files():
+
+    required_files = [
+
+        MODEL_DIR / "xgboost_model.pkl",
+        MODEL_DIR / "feature_columns.pkl",
+        MODEL_DIR / "category_encoders.pkl",
+        MODEL_DIR / "training_metadata.pkl",
+
+    ]
+
+    if not all(file.exists() for file in required_files):
+        download_models()
+
 
 # ==========================================================
 # DOWNLOAD EVERYTHING
