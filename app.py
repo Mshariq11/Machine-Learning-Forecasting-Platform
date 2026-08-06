@@ -192,3 +192,9 @@ PAGES = {
     "Finance": show_finance_dashboard,
     "Forecast": show_forecast_dashboard,
 }
+
+# ==========================================================
+# RUN SELECTED PAGE
+# ==========================================================
+
+PAGES[page]()
